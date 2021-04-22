@@ -1,2 +1,2 @@
 # Hoja de Trabajo 7
-## Maquinas Vectoriales de Soporte (SVM)
+Maquinas Vectoriales de Soporte (SVM)
