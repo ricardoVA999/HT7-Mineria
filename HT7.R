@@ -80,3 +80,14 @@ predRad<-predict(svnRad,newdata=test[,1:14])
 
 confusionMatrix(table(test$clasification,predRad))
 
+
+#Modelo SVM lineal
+svnLin<-svm(clasification~., data = training, scale = T, type = "C-classification", kernel = "linear", cost=2^-5) #77.8%
+svnLin<-svm(clasification~., data = training, scale = T, type = "C-classification", kernel = "linear", cost=2^5) #78.4%
+
+summary(svnLin)
+plot(svnLin,training,LotArea~GrLivArea)
+
+predLin<-predict(svnLin,newdata=test[,1:14])
+
+confusionMatrix(table(test$clasification,predLin))
