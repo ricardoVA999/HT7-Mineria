@@ -1,3 +1,4 @@
+setwd("C:/Users/Zephyrus/Documents/U/7mo Semestre/Mineria de Datos/HT7-Mineria")
 library(e1071)
 library(caret)
 library(corrplot)
@@ -67,4 +68,15 @@ test<-houses[setdiff(rownames(houses),rownames(training)),]
 
 table(training$clasification)
 table(test$clasification)
+
+#Modelo SVM radial
+svnRad<-svm(clasification~., data = training, scale = T, type = "C-classification", kernel = "radial", gamma = 2^-4)#80.9%
+svnRad<-svm(clasification~., data = training, scale = T, type = "C-classification", kernel = "radial", gamma = 1/4)#78.9
+svnRad<-svm(clasification~., data = training, scale = T, type = "C-classification", kernel = "radial", gamma = 0.05)#81.1%
+summary(svnRad)
+plot(svnRad,training,LotArea~GrLivArea)
+
+predRad<-predict(svnRad,newdata=test[,1:14])
+
+confusionMatrix(table(test$clasification,predRad))
 
