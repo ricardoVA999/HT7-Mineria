@@ -1,4 +1,4 @@
-setwd("C:/Users/Zephyrus/Documents/U/7mo Semestre/Mineria de Datos/HT7-Mineria")
+#setwd("C:/Users/Zephyrus/Documents/U/7mo Semestre/Mineria de Datos/HT7-Mineria")
 library(e1071)
 library(caret)
 library(corrplot)
@@ -85,6 +85,18 @@ confusionMatrix(table(test$clasification,predRad))
 svnLin<-svm(clasification~., data = training, scale = T, type = "C-classification", kernel = "linear", cost=2^-5) #77.8%
 svnLin<-svm(clasification~., data = training, scale = T, type = "C-classification", kernel = "linear", cost=2^5) #78.4%
 
+summary(svnLin)
+plot(svnLin,training,LotArea~GrLivArea)
+
+predLin<-predict(svnLin,newdata=test[,1:14])
+
+confusionMatrix(table(test$clasification,predLin))
+
+#Modelo SVM tuneado
+svnLinTuned<-tune.svm(clasification~., data=training, cost=c(0.0005,0.001, 0.005,0.01,0.1,0.5, 1), kernel="linear")
+summary(svnLinTuned)#Mejor modelo con costo de 0.005
+
+svnLinTuned<-svm(clasification~., data = training, scale = T, type = "C-classification", kernel = "linear", cost=0.005)#78.4
 summary(svnLin)
 plot(svnLin,training,LotArea~GrLivArea)
 
